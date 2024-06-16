@@ -1,0 +1,35 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: your org
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: your app
+service: your service
+stage: dev
+
+provider:
+  name: provider name
+  runtime: nodejs16.x
+  environment:
+    GMAIL_USER: 'youremail@.com'
+    GMAIL_PASS: 'password'
+
+plugins:
+  - serverless-offline
+
+functions:
+  rootHandler:
+    handler: handler.rootHandler
+    events:
+      - http:
+          path: /
+          method: get
+
+  sendEmail:  
+    handler: handler.sendEmail
+    events:
+      - http:
+          path: send-email
+          method: post
+
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
